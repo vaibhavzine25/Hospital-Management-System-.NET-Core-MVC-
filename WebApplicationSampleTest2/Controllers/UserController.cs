@@ -226,5 +226,12 @@ namespace WebApplicationSampleTest2.Controllers
             return RedirectToAction("Index", "DashBord");
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
     }
 }

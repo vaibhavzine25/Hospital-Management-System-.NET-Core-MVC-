@@ -1,7 +1,7 @@
 ﻿@using WebApplicationSampleTest2.Models
 @model IList<Patient>
 @{
-    ViewData["Title"] = "Patient";
+    ViewData["Title"] = "OPD";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -21,10 +21,20 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title">Patient Details</h4>
+                <h4 class="card-title">OPD Details</h4>
                 <p class="card-title-desc">
-                    Patient Details.
+                    OPD visit details.
                 </p>
+
+                <div class="d-flex justify-content-end mb-3">
+                    <form id="searchForm" method="get" asp-action="Index" class="d-flex">
+                        <input type="text" name="search" id="searchInput"
+                               value="@ViewBag.Search"
+                               class="form-control me-2 w-auto"
+                               placeholder="Search patient name..." />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
 
                 <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                     <thead>
@@ -140,4 +150,3 @@
         </div>
     </div>
 </div>
-

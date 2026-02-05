@@ -3,6 +3,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,15 +22,26 @@ namespace WebApplicationSampleTest2.Models
         {
             try
             {
-
                 var document = CreateDocument(patientReportModel);
 
                 //// generate PDF file and return it as a response
                 var pdf = document.GeneratePdf();
 
-                System.IO.File.WriteAllBytes(@"D:\\Print\\hello.pdf", pdf);
+                var outputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "reports");
+                Directory.CreateDirectory(outputDirectory);
+
+                var safePatientName = (patientReportModel.PatientName ?? "Patient")
+                    .Replace(" ", "_")
+                    .Replace(Path.DirectorySeparatorChar, '_')
+                    .Replace(Path.AltDirectorySeparatorChar, '_');
+
+                var fileName = $"Report_{safePatientName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+                var filePath = Path.Combine(outputDirectory, fileName);
+
+                File.WriteAllBytes(filePath, pdf);
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 
