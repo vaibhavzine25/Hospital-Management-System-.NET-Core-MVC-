@@ -1,0 +1,73 @@
+﻿@using WebApplicationSampleTest2.Models
+@model PatientReportModel
+@{
+    ViewData["Title"] = "Print Priscription";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="row" onload="execute()">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4"></h4>
+
+                <form class="custom-validation" novalidate asp-action="Print" asp-controller="Patient">
+                    @Html.HiddenFor(model => model.VisitTIme, new { VisitTIme = "VisitTIme" })
+                    @Html.HiddenFor(model => model.PatientName, new { PatientName = "PatientName" })
+                    @Html.HiddenFor(model => model.Age, new { Age = "Age" })
+                    @Html.HiddenFor(model => model.BP, new { BP = "BP" })
+                    @Html.HiddenFor(model => model.Pluse, new { Pluse = "Pluse" })
+                    @Html.HiddenFor(model => model.Diagnosis, new { Diagnosis = "Diagnosis" })
+                    @Html.HiddenFor(model => model.tablate, new { tablate = "tablate" })
+                    @Html.HiddenFor(model => model.ReportDetail, new { ReportDetail = "ReportDetail" })
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Hostpital Name</label>
+                                <input type="text" asp-for="@Model.Hostpital_Name" value="ABC Hosplital" class="form-control" id="Hostpital_Name" placeholder="Enter the Hostpital Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Hostpital Address</label>
+                                <input type="text" asp-for="@Model.Address" value="Wagholi , Pune 412204" class="form-control" id="Address" placeholder="Enter the Hostpital Address" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Doctor Name</label>
+                                <input type="text" asp-for="@Model.DrName" value="Dr. Ranjeet Shinde" class="form-control" id="DrName" placeholder="Enter the Doctor Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Doctor Education</label>
+                                <input type="text" asp-for="@Model.DrEducation" value="MBBS MD" class="form-control" id="DrEducation" placeholder="Enter the Doctor Education" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-md">Submit</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <a type="reset" class="btn btn-secondary waves-effect" asp-controller="HostList" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

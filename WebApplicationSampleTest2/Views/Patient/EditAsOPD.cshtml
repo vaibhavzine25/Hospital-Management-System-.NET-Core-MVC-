@@ -1,0 +1,260 @@
+﻿@using WebApplicationSampleTest2.Models
+@model Patient
+@{
+    ViewData["Title"] = "Welcome Patient OPD";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="row" onload="execute()">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4"></h4>
+
+                <form class="custom-validation" novalidate asp-action="UpdatePatientDetails" asp-controller="Patient">
+                    @Html.HiddenFor(model => model.Id, new { id = "Id" });
+                    @Html.HiddenFor(model => model.FirstName, new { FirstName = "FirstName" })
+                    @Html.HiddenFor(model => model.LastName, new { LastName = "LastName" })
+                    @Html.HiddenFor(model => model.PhoneNumber, new { PhoneNumber = "PhoneNumber" })
+                    @Html.HiddenFor(model => model.Gender, new { Gender = "Gender" })
+                    @Html.HiddenFor(model => model.Address, new { Address = "Address" })
+                    @Html.HiddenFor(model => model.Status, new { Status = "Status" })
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dllselectsymptoms" class="form-label">Select Symptoms</label>
+                                <select id="dllselectsymptomsdsdsdsds" class="form-select">
+                                    <option selected disabled value="0">Select Symptoms</option>
+                                    <option value="Fever">Fever</option>
+                                    <option value="Asthma">Asthma</option>
+                                    <option value="Hypertension">Hypertension</option>
+                                    <option value="Thyroid malfunctions">Thyroid malfunctions</option>
+                                    <option value="Liver Diseases">Liver Diseases</option>
+                                    <option value="Heart Diseases">Heart Diseases</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6" style="margin-top:25px">
+                            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="SaveSymptoms()">Add Symptoms</button>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="Symptomslist">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">BP</label>
+                                <input type="text" asp-for="@Model.BP" value="@Model.BP" class="form-control" id="BP" placeholder="Enter the BP" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Pulse</label>
+                                <input type="text" asp-for="@Model.pulse" value="@Model.pulse" class="form-control" id="pulse" placeholder="Enter the pulse" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="formrow-firstname-input" class="form-label">Investigation </label>
+                                <textarea class="form-control" asp-for="@Model.Investigation" value="@Model.Investigation" id="Address" placeholder="Enter Investigation" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary w-md">Update Till Investigation</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="formrow-firstname-input" class="form-label">ReportDetail </label>
+                                <textarea class="form-control" asp-for="@Model.ReportDetail" value="@Model.ReportDetail" id="Address" placeholder="Enter ReportDetail" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dllselectsymptoms" class="form-label">Treatment</label>
+                                <select id="ddlMedicines" class="form-select">
+                                    <option selected disabled value="0">Select Medicines</option>
+                                    <option value="Gabapentin">Gabapentin</option>
+                                    <option value="Amoxicillin">Amoxicillin</option>
+                                    <option value="Amphotericin B">Amphotericin B</option>
+                                    <option value="Cephalexin">Cephalexin</option>
+                                    <option value="Statins">Statins</option>
+                                    <option value="crocin">crocin</option>
+                                    <option value="nicip plus">nicip plus</option>
+                                    <option value="cetirizine">cetirizine</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Morning</label>
+                                <input type="text" value="Y" class="form-control" id="Morning" placeholder="Enter the Morning Dose" required>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Afternoon</label>
+                                <input type="text" value="Y" class="form-control" id="Afternoon" placeholder="Enter the Afternoon" required>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="profile_Name" class="form-label">Evening</label>
+                                <input type="text" value="Y" class="form-control" id="Evening" placeholder="Enter the Evening" required>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-6" style="margin-top:25px">
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="SaveMedicines()">Add Medicines</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12" id="Medicineslist">
+
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary w-md">Update Patient</button>
+                    </div>
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Scripts {
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/js/ShowNotification.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var editid = $("#Id").val();
+            EditddlMedicines('')
+            EditPreAuth('')
+        })
+
+        function SaveMedicines() {
+
+            var symptopmsss = $("#ddlMedicines").val();
+            var _Evening = $("#Evening").val();
+           
+            var _Afternoon = $("#Afternoon").val();
+            
+            var _Morning = $("#Morning").val();
+            
+            if (symptopmsss != "") {
+
+                EditddlMedicines(symptopmsss, _Morning, _Afternoon, _Evening);
+            }
+        }
+
+        function EditddlMedicines(Command, _Morning, _Afternoon, _Evening) {
+            $.ajax({
+                type: "Get",
+                url: "/Patient/SaveMedicines?Command=" + Command + "&_Morning=" + _Morning + "&_Afternoon=" + _Afternoon + "&_Evening=" + _Evening,
+
+                success: function (data) {
+
+                    $("#Medicineslist").html("");
+                    $("#Medicineslist").html(data);
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        }
+
+        function deletepreAuthCommand(Command) {
+
+            $.ajax({
+                type: "Get",
+                url: "/Patient/DeleteMedicines?Command=" + Command,
+
+                success: function (data) {
+                    $("#Medicineslist").html("");
+                    $("#Medicineslist").html(data);
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+
+        }
+
+        function SaveSymptoms() {
+
+            var symptopmsss = $("#dllselectsymptomsdsdsdsds").val();
+
+            if (symptopmsss != "") {
+                EditPreAuth(symptopmsss);
+            }
+        }
+
+        function EditPreAuth(Command) {
+
+            $.ajax({
+                type: "Get",
+                url: "/Patient/SaveSymtons?Command=" + Command,
+
+                success: function (data) {
+                    $("#Symptomslist").html("");
+                    $("#Symptomslist").html(data);
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        }
+
+        function deletepreAuthCommand(Command) {
+
+            $.ajax({
+                type: "Get",
+                url: "/Patient/DeleteSymtons?Command=" + Command,
+
+                success: function (data) {
+                    $("#Symptomslist").html("");
+                    $("#Symptomslist").html(data);
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+
+        }
+    </script>
+}

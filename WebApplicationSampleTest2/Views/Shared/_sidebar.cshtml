@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var role = HttpContextAccessor.HttpContext.Session.GetString("UserRole") ?? "User";
+}
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu" style="width:103%">
+                <li class="menu-title" key="t-menu">Menu</li>
+
+                <li>
+                    <a asp-action="Index" asp-controller="DashBord">
+                        <i class="bx bx-home-circle"></i>
+                        <span key="t-dashboards">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-layouts">Configuration</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                    @if (role != "SuperAdmin")
+                        {
+                            <li><a asp-action="Index" asp-controller="Patient" key="t-light-sidebar" title="Patient">Patient</a></li>
+                            @* <li><a asp-action="Create" asp-controller="Patient" key="t-light-sidebar" title="Patient">Create Patient</a></li> *@
+                            <li><a asp-action="Index" asp-controller="Symptom" key="t-light-sidebar" title="Patient">Symptom</a></li>
+                            <li><a asp-action="Index" asp-controller="Medicine" key="t-light-sidebar" title="Patient">Medicine</a></li>
+                            <li><a asp-action="PatientList" asp-controller="Patient" key="t-light-sidebar" title="Patient">PatientList</a></li>
+                        }
+                        @if (role == "SuperAdmin")
+                       {
+                            <li><a asp-action="Index" asp-controller="Hospital" key="t-light-sidebar" title="Patient">Hospital</a></li>
+                            <li><a asp-action="Index" asp-controller="User" key="t-light-sidebar" title="Patient">User</a></li>
+                        }
+                        
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="bx bx-log-out"></i>
+                        <span key="t-authentication">Log Out</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->

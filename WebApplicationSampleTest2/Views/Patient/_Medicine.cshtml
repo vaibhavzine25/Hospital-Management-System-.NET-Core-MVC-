@@ -1,0 +1,48 @@
+﻿@model List<tablet>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Medicine</th>
+                                <th scope="col">Morning</th>
+                                <th scope="col">Afternoon</th>
+                                <th scope="col">Evening</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.TablateName
+                                        </td>
+                                        <td>
+                                            @item.Morning
+                                        </td>
+                                        <td>
+                                            @item.Afternoon
+                                        </td>
+                                        <td>
+                                            @item.Evening
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger" onclick="deletepreAuthCommand('@item')">delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

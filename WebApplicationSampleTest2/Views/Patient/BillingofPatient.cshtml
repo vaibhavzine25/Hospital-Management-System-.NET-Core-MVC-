@@ -1,0 +1,131 @@
+﻿@using WebApplicationSampleTest2.Models
+@model Patient
+@{
+    ViewData["Title"] = "Welcome Patient OPD";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="row" onload="execute()">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4"></h4>
+
+                <form class="custom-validation" novalidate asp-action="UpdateBilling" asp-controller="Patient">
+                    @Html.HiddenFor(model => model.Id, new { id = "Id" });
+                    @Html.HiddenFor(model => model.FirstName, new { FirstName = "FirstName" })
+                    @Html.HiddenFor(model => model.LastName, new { LastName = "LastName" })
+                    @Html.HiddenFor(model => model.PhoneNumber, new { PhoneNumber = "PhoneNumber" })
+                    @Html.HiddenFor(model => model.Gender, new { Gender = "Gender" })
+                    @Html.HiddenFor(model => model.Address, new { Address = "Address" })
+                    @Html.HiddenFor(model => model.Status, new { Status = "Status" })
+                    @Html.HiddenFor(model => model.BP, new { Status = "BP" })
+                    @Html.HiddenFor(model => model.pulse, new { Status = "pulse" })
+                    @Html.HiddenFor(model => model.Medicineslist, new { Status = "Medicineslist" })
+                    @Html.HiddenFor(model => model.symptoms, new { Status = "symptoms" })
+                    @Html.HiddenFor(model => model.symptomsmain, new { Status = "symptomsmain" })
+                    @Html.HiddenFor(model => model.Investigation, new { Status = "Investigation" })
+                    @Html.HiddenFor(model => model.ReportDetail, new { Status = "ReportDetail" })
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dllselectsymptoms" class="form-label">Treatment</label>
+                                <select id="ddlMedicines" class="form-select">
+                                    <option selected disabled value="0">Select Bill Type</option>
+                                    <option value="Consultation Opd">Consultation Opd</option>
+                                    <option value="Nursing Charge">Nursing Charge</option>
+                                    <option value="Dressing Charge">Dressing Charge</option>
+                                    <option value="Other">Other</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6" style="margin-top:25px">
+                            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="SaveMedicines()">Add Charges</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12" id="RanjeetShinde">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" id="Medicineslist">
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary w-md">Pay</button>
+                    </div>
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+
+@section Scripts {
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/js/ShowNotification.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var editid = $("#Id").val();
+            EditddlMedicines('')
+        })
+
+        function SaveMedicines() {
+
+            var symptopmsss = $("#ddlMedicines").val();
+
+            if (symptopmsss != "") {
+
+                EditddlMedicines(symptopmsss);
+            }
+        }
+
+        function EditddlMedicines(Command) {
+            $.ajax({
+                type: "Get",
+                url: "/Patient/SaveBillingDetails?Command=" + Command,
+
+                success: function (data) {
+
+                    $("#RanjeetShinde").html("");
+                    $("#RanjeetShinde").html(data);
+
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        }
+
+        function deletepreAuthCommand(Command) {
+
+            $.ajax({
+                type: "Get",
+                url: "/Patient/DeleteBillingDetails?Command=" + Command,
+
+                success: function (data) {
+                    $("#RanjeetShinde").html("");
+                    $("#RanjeetShinde").html(data);
+
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+
+        }
+
+
+    </script>
+}
