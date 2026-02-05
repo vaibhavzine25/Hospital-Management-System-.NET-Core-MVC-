@@ -70,6 +70,53 @@ namespace WebApplicationSampleTest2.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult PrintBilling(string Id)
+        {
+            if (string.IsNullOrWhiteSpace(Id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var patient = lstPatient
+                .Where(w => w.FirstName != null && w.FirstName.Equals(Id, StringComparison.OrdinalIgnoreCase))
+                .Select(s => s)
+                .FirstOrDefault();
+
+            if (patient == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var billingDetails = patient.BillingDetails ?? _BillingDetails;
+            var total = 0;
+
+            if (billingDetails != null)
+            {
+                foreach (var item in billingDetails)
+                {
+                    if (int.TryParse(item.Value, out var amount))
+                    {
+                        total += amount;
+                    }
+                }
+            }
+
+            var reportModel = new BillingReportModel
+            {
+                HospitalName = "Hospital",
+                HospitalAddress = "Address",
+                PatientName = $"{patient.FirstName} {patient.LastName}".Trim(),
+                VisitTime = DateTime.Now,
+                BillingDetails = billingDetails ?? new Dictionary<string, string>(),
+                TotalAmount = total
+            };
+
+            var billingReport = new BillingReport();
+            billingReport.GenrateReport(reportModel);
+
+            return RedirectToAction("BillingofPatient", new { Id = patient.FirstName });
+        }
         public IActionResult BillingofPatient(string Id)
         {
             Patient patient = lstPatient.Where(w => w.FirstName.ToLower() == Id.ToLower()).Select(s => s).FirstOrDefault();
